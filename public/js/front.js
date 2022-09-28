@@ -1912,7 +1912,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'App',
   data: function data() {
     return {
-      title: "Work in progress"
+      title: "Work in progress..."
     };
   }
 });

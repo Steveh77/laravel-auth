@@ -2,6 +2,13 @@
 
 @section('content')
     <div class="container">
+        @if (session('message'))
+            <div>
+                <div class="alert alert-{{ session('type') ?? info }}">
+                    {{ session('message') }}
+                </div>
+            </div>
+        @endif
         <h1>Lista Post</h1>
 
         <table class="table table-dark">
@@ -24,10 +31,17 @@
                         <td>{{ $post->slug }}</td>
                         <td>{{ $post->created_at }}</td>
                         <td>{{ $post->updated_at }}</td>
-                        <td>
-                            <a class="btn btn-sm btn-primary" href="{{ route('admin.posts.show', $post->id) }}">
+                        <td class="d-flex">
+                            <a class="btn btn-sm btn-primary mx-2" href="{{ route('admin.posts.show', $post->id) }}">
                                 <i class="fa-solid fa-eye mr-1"></i> Vedi
                             </a>
+                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger" type="submit">
+                                    <i class="fa-solid fa-trash mr-3"></i>Elimina
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty
