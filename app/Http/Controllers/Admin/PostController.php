@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -37,7 +38,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $new_post = new Post();
+        $new_post->fill($data);
+        $new_post->slug = Str::slug($new_post->title, '-');
+
+        $new_post->save();
+        return redirect()->route('admin.posts.show', $new_post)
+            ->with('message', 'Post creato con successo')
+            ->with('type', 'success');
     }
 
     /**
@@ -86,6 +96,6 @@ class PostController extends Controller
 
         return redirect()->route('admin.posts.index')
             ->with('message', 'il post è stato eliminato con successo')
-            ->with('type', 'success');
+            ->with('type', 'danger');
     }
 }

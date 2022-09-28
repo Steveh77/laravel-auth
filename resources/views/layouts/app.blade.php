@@ -86,6 +86,15 @@
         </nav>
 
         <main class="py-4">
+            <div class="container">
+                @if (session('message'))
+                    <div>
+                        <div class="alert alert-{{ session('type') ?? info }}">
+                            {{ session('message') }}
+                        </div>
+                    </div>
+                @endif
+            </div>
             @yield('content')
         </main>
     </div>
