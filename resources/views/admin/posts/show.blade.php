@@ -7,15 +7,18 @@
         </header>
         <div class="clearfix">
             @if ($post->image)
-                <img class="float-left mr-3" src="{{ $post->image }}" alt="">
+                <img class="float-left mr-3" src="{{ $post->image }}"
+                    alt=""style="
+                height: 200px;
+            ">
             @endif
 
             <p>{{ $post->content }}</p>
             <div>
-                <time><b>Creato il:</b>{{ $post->created_at }}</time>
+                <time><b>Creato il: </b>{{ $post->created_at }}</time>
             </div>
             <div>
-                <time><b>Ultima modifica il:</b> {{ $post->updated_at }}</time>
+                <time><b>Ultima modifica il: </b> {{ $post->updated_at }}</time>
             </div>
         </div>
 

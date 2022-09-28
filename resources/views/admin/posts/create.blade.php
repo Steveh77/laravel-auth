@@ -25,14 +25,14 @@
                 <div class="col-11">
                     <div class="form-group">
                         <label for="image">Immagine</label>
-                        <input type="url" class="form-control" id="image" name="image"
+                        <input type="url" class="form-control" id="image-field" name="image"
                             value="{{ old('image') }}">
                     </div>
                 </div>
                 <div class="col-1">
                     <img class="img-fluid"
                         src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
-                        alt="">
+                        alt="" id="preview">
                 </div>
             </div>
             <hr>
