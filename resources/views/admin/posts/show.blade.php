@@ -31,7 +31,10 @@
                 </a>
             </div>
 
-            <div>
+            <div class="d-flex">
+                <a class="btn btn-warning mr-2" href="{{ route('admin.posts.edit', $post->id) }}">
+                    <i class="fa-solid fa-pencil mr-1"></i> Modifica
+                </a>
                 <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
                     @csrf
                     @method('DELETE')
