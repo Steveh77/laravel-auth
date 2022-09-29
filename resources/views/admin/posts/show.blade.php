@@ -12,7 +12,13 @@
                 height: 200px;
             ">
             @endif
-
+            <p><strong>Categoria: </strong>
+                @if ($post->category)
+                    {{ $post->category->label }}
+                @else
+                    Non presente
+                @endif
+            </p>
             <p>{{ $post->content }}</p>
             <div>
                 <time><b>Creato il: </b>{{ $post->created_at }}</time>

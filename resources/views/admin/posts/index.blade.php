@@ -15,29 +15,40 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titolo</th>
+                    <th scope="col">Categoria</th>
                     <th scope="col">Slug</th>
                     <th scope="col">Creato il</th>
                     <th scope="col">Modificato il</th>
-                    <th>Azioni </th>
+                    <th scope="col" class="text-center">Azioni</th>
                 </tr>
             </thead>
             <tbody>
 
                 @forelse ($posts as $post)
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">{{ $post->id }}</th>
                         <td>{{ $post->title }}</td>
+                        <td>
+                            @if ($post->category)
+                                <span class="badge badge-pill badge-{{ $post->category->color }}">
+                                    {{ $post->category->label }}
+                                </span>
+                            @else
+                                Nessuna
+                            @endif
+                        </td>
                         <td>{{ $post->slug }}</td>
                         <td>{{ $post->created_at }}</td>
                         <td>{{ $post->updated_at }}</td>
-                        <td class="d-flex">
+                        <td class="d-flex justify-content-end">
                             <a class="btn btn-sm btn-primary mr-2" href="{{ route('admin.posts.show', $post->id) }}">
                                 <i class="fa-solid fa-eye mr-1"></i> Vedi
                             </a>
                             <a class="btn btn-sm btn-warning mr-2" href="{{ route('admin.posts.edit', $post->id) }}">
                                 <i class="fa-solid fa-pencil mr-1"></i> Modifica
                             </a>
-                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
+                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST"
+                                class="delete-form">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-danger" type="submit">
@@ -47,7 +58,11 @@
                         </td>
                     </tr>
                 @empty
-                    <h2>Nessun Posts</h2>
+                    <tr>
+                        <td colspan="7">
+                            <h2>Nessun Posts</h2>
+                        </td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>
