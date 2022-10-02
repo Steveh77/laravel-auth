@@ -26,6 +26,14 @@
             <div>
                 <time><b>Ultima modifica il: </b> {{ $post->updated_at }}</time>
             </div>
+            <div>
+                <b>Autore: </b>
+                @if ($post->user)
+                    {{ $post->user->name }}
+                @else
+                    Anonimo
+                @endif
+            </div>
         </div>
 
         <hr>

@@ -15,6 +15,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titolo</th>
+                    <th scope="col">Autore</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Slug</th>
                     <th scope="col">Creato il</th>
@@ -28,6 +29,13 @@
                     <tr>
                         <th scope="row">{{ $post->id }}</th>
                         <td>{{ $post->title }}</td>
+                        <td>
+                            @if ($post->user)
+                                {{ $post->user->name }}
+                            @else
+                                Anonimo
+                            @endif
+                        </td>
                         <td>
                             @if ($post->category)
                                 <span class="badge badge-pill badge-{{ $post->category->color }}">
@@ -59,7 +67,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                             <h2>Nessun Posts</h2>
                         </td>
                     </tr>
