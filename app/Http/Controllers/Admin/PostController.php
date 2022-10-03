@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
+use App\Models\Tag;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -32,7 +33,8 @@ class PostController extends Controller
     {
         $post = new Post();
         $categories = Category::all();
-        return view('admin.posts.create', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -43,6 +45,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->all();
 
         $new_post = new Post();
@@ -52,6 +55,9 @@ class PostController extends Controller
         $new_post->user_id = Auth::id();
 
         $new_post->save();
+
+        if (array_key_exists('tags', $data)) $new_post->tags()->attach($data['tags']);
+
         return redirect()->route('admin.posts.show', $new_post)
             ->with('message', 'Post creato con successo')
             ->with('type', 'success');
@@ -76,8 +82,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $postTags = $post->tags->pluck('id')->toArray();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'postTags'));
     }
 
     /**
@@ -94,6 +102,13 @@ class PostController extends Controller
         $data['slug'] = Str::slug($request->title, '-');
 
         $post->update($data);
+
+
+        if (array_key_exists('tags', $data)) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->detach();
+        }
 
         return redirect()->route('admin.posts.show', $post)
             ->with('message', 'Post modificato con successo')

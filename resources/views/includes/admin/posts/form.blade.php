@@ -44,6 +44,22 @@
             alt="" id="preview">
     </div>
 </div>
+@if (count($tags))
+
+    <fieldset>
+        <h4>Tags</h4>
+
+        @foreach ($tags as $tag)
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tag-{{ $tag->label }}" name="tags[]"
+                    value="{{ $tag->id }}" @if (in_array($tag->id, old('tags', $postTags ?? []))) checked @endif>
+
+                <label class="form-check-label" for="{{ $tag->label }}">{{ $tag->label }}</label>
+            </div>
+        @endforeach
+
+    </fieldset>
+@endif
 <hr>
 <footer class="d-flex justify-content-between">
     <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">
